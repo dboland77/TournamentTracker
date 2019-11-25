@@ -6,18 +6,31 @@ using System.Text;
 using TrackerLibrary.Models;
 using System.Data.SqlClient;
 
-/*
-@Placenumber int,
-@PlaceName nvarchar(50),
-@PrizeAmount money,
-@PrizePercentage float,
-@id int = 0 output
-*/
 
 namespace TrackerLibrary.DataAccess
 {
     public class SQLConnector : IDataConnection
     {
+        public PersonModel CreatePerson(PersonModel model)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString("Tournaments")))
+            {
+                var p = new DynamicParameters();
+                p.Add("@FirstName", model.FirstName);
+                p.Add("@LastName", model.LastName);
+                p.Add("@EmailAddress", model.EmailAddress);
+                p.Add("@CellphoneNumber", model.CellphoneNumber);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output); //Return the id as an output
+
+                connection.Execute("dbo.spPeople_Insert", p, commandType: CommandType.StoredProcedure);
+
+                model.Id = p.Get<int>("@id");
+
+                return model;
+
+            }
+        }
+
         //TODO - Make the CreatePrize method save to the database
         /// <summary>
         /// Saves a new prize to the database
