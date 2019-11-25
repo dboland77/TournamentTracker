@@ -5,15 +5,18 @@ using System.Data;
 using System.Text;
 using TrackerLibrary.Models;
 using System.Data.SqlClient;
+using System.Linq;
 
 
 namespace TrackerLibrary.DataAccess
 {
     public class SQLConnector : IDataConnection
     {
+        private const string db = "Tournaments";
+
         public PersonModel CreatePerson(PersonModel model)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString("Tournaments")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(db)))
             {
                 var p = new DynamicParameters();
                 p.Add("@FirstName", model.FirstName);
@@ -39,7 +42,7 @@ namespace TrackerLibrary.DataAccess
         /// <returns> The prize information with the unique identifier </returns>
         public PrizeModel CreatePrize(PrizeModel model)
         {
-            using(IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString("Tournaments")) )
+            using(IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(db)) )
             {
                 var p = new DynamicParameters();
                 p.Add("@Placenumber", model.PlaceNumber);
@@ -55,6 +58,18 @@ namespace TrackerLibrary.DataAccess
                 return model;
 
             }
+        }
+
+        public List<PersonModel> GetPerson_All()
+        {
+            List<PersonModel> output;
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(db)))
+            {
+                output = connection.Query<PersonModel>("dbo.spPeople_GetAll").ToList();              
+            }
+
+            return output;
         }
     }
 }
