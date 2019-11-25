@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TrackerLibrary.Models
+{
+    public class TeamModel
+    {
+        public List<PersonModel> TeamMembers { get; set; } = new List<PersonModel>(); //This is an auto-constructor
+        public string TeamName { get; set; }
+   
+    
+    }
+}
