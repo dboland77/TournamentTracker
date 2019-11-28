@@ -51,7 +51,6 @@
             this.headerLabel.Size = new System.Drawing.Size(270, 65);
             this.headerLabel.TabIndex = 12;
             this.headerLabel.Text = "Create Prize";
-            this.headerLabel.Click += new System.EventHandler(this.headerLabel_Click);
             // 
             // placeNumberValue
             // 
