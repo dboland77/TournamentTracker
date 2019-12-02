@@ -32,7 +32,7 @@ namespace TrackerLibrary.Models
         /// </summary>
         /// <param name="InitialScore"></param>
         /// //ctor tab tab creates a constructor
-        public MatchupEntryModel(double InitialScore)
+        public MatchupEntryModel()
         {
             // cw tab tab will print the line below
             Console.WriteLine();
