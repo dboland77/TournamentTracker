@@ -10,6 +10,11 @@ namespace TrackerLibrary.Models
         // this will auto-format for you on a new line
         // It will also display the comment when someone is using this class
         /// <summary>
+        /// The unique identifier for the person.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Represents one team in the matchup
         /// </summary>
         public TeamModel TeamCompeting { get; set; }
@@ -32,12 +37,12 @@ namespace TrackerLibrary.Models
         /// </summary>
         /// <param name="InitialScore"></param>
         /// //ctor tab tab creates a constructor
-        public MatchupEntryModel()
-        {
-            // cw tab tab will print the line below
-            Console.WriteLine();
-        }
-       
+        //public MatchupEntryModel()
+        //{
+        //    // cw tab tab will print the line below
+        //    Console.WriteLine();
+        //}
+
 
     }
 }
