@@ -37,7 +37,7 @@ namespace TrackerLibrary.DataAccess
 
         }
 
-        // TODO - Wire up the CreatePrize for text files
+        // Wire up the CreatePrize for text files
         public PrizeModel CreatePrize(PrizeModel model)
         {
             // here we can use our extension methods from the TextConnectorHelpers namespace
@@ -106,7 +106,7 @@ namespace TrackerLibrary.DataAccess
 
             model.Id = currentId;
 
-            tournaments.SaveRoundsToFile(model, MatchupFile, MatchupEntryFile);
+            model.SaveRoundsToFile(MatchupFile, MatchupEntryFile);
 
             tournaments.Add(model);
 
