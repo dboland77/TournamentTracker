@@ -263,7 +263,7 @@ namespace TrackerLibrary.DataAccess
                     foreach (MatchupModel m in matchups)
                     {
                         p = new DynamicParameters();
-                        p.Add("@MatchupId", t.Id);
+                        p.Add("@MatchupId", m.Id);
 
                         //Populate Rounds
                         m.Entries = connection.Query<MatchupEntryModel>("dbo.spMatchupEntries_GetByMatchup", p, commandType: CommandType.StoredProcedure).ToList();
@@ -313,6 +313,36 @@ namespace TrackerLibrary.DataAccess
             }
 
             return output;
+        }
+
+        public void UpdateMatchup(MatchupModel model)
+        {
+            // spMatchups_Update @id, @Winnerid
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectionString(db)))
+            {
+                var p = new DynamicParameters();
+
+                p.Add("@id", model.Id);
+                p.Add("@Winnerid", model.Winner.Id);
+
+                connection.Execute("dbo.spMatchups_Update", p, commandType: CommandType.StoredProcedure);
+
+                // spMatchupEntries_Update id, TeamCompetingId, Score
+
+                foreach (MatchupEntryModel me in model.Entries)
+                {
+                    p = new DynamicParameters();
+
+                    p.Add("@id", me.Id);
+                    p.Add("@TeamCompetingId", me.TeamCompeting.Id);
+                    p.Add("@Score", me.Score);
+
+                    connection.Execute("dbo.spMatchupEntries_Update", p, commandType: CommandType.StoredProcedure);
+
+
+                }
+
+            }
         }
     }
 }
