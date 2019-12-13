@@ -205,27 +205,10 @@ namespace TrackerUI
                             return;
                         }
                     }
-
                 }
             }
-
-            if (teamOneScore > teamTwoScore)
-            {
-                //Team one wins
-                m.Winner = m.Entries[0].TeamCompeting;
-            }
-            else if (teamTwoScore > teamOneScore)
-            {
-                m.Winner = m.Entries[1].TeamCompeting;
-            }
-            else
-            {
-                MessageBox.Show("I do not handle tied games yet.");
-            }
-
+            TournamentLogic.UpdateTournamentResults(tournament);
             LoadMatchups((int)roundDropDown.SelectedItem);
-
-            GlobalConfig.Connection.UpdateMatchup(m);
         }
     }
 }
